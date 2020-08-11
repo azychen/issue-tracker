@@ -2,26 +2,35 @@
 
 // Constructors
 
-Group::Group(int id, int cd, string t, string d, string r)
-    : Entry(id, cd, t, d, r) {}
+Group::Group(int id, int cd, string t)
+    : Entry(id, cd, t) {}
 
-Group::Group(int id, int cd, string t, string d, string r, vector<Entry*> es)
-    : Entry(id, cd, t, d, r),
+Group::Group(int id, int cd, string t, vector<Entry*> es)
+    : Entry(id, cd, t),
       subentries(es) {}
 
-// Edit fields
 
-void Group::add_subentry(Entry* e) {
-    // Check if entry exists with same id
-    if (find(subentries.begin(), subentries.end(), e) == subentries.end()) {
-        subentries.push_back(e);
+// Destructor
+
+Group::~Group() {
+    cout << "Deleting group " << title;
+    for (auto sub : subentries) {
+        delete sub;
     }
 }
 
+// Edit fields
+
 void Group::set_repository(string r) {
-    repository = r;
     for (auto it = subentries.begin(); it != subentries.end(); it++) {
         (*it)->set_repository(r);
+    }
+}
+
+void Group::add_subentry(Entry* e) {
+    // Check if entry exists
+    if (find(subentries.begin(), subentries.end(), e) == subentries.end()) {
+        subentries.push_back(e);
     }
 }
 
@@ -32,13 +41,12 @@ void Group::deactivate() {
     is_active = false;
 }
 
-void Group::print_info() const {
-    cout << "ENTRY: " << title << '\n'
-         << "DATE CREATED: " << creation_date << '\n'
-         << "REPOSITORY: " << repository << '\n'
-         << "DESCRIPTION: " << description << endl;
-    cout << "SUB-ISSUES: " << endl;
+void Group::print_info(const int level) const {
+    cout << string(level, '\t') << "GROUP: " << title << '\n'
+         << string(level, '\t') << "DATE CREATED: " << creation_date << '\n';
+    cout << string(level, '\t') << "SUB-ISSUES: " << endl;
     for (auto it = subentries.begin(); it != subentries.end(); it++) {
-        (*it)->print_info();
+        cout << "\n";
+        (*it)->print_info(level + 1);
     }
 }

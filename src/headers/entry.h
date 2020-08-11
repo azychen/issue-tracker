@@ -18,8 +18,7 @@ class Entry {
     int creation_date;
 
     string title;
-    string description;
-    string repository;
+
 
     bool is_active;
 
@@ -28,21 +27,19 @@ class Entry {
    public:
 
     // Constructors
-    Entry(int id, int cd, string t, string d, string r);
+    Entry(int id, int cd, string t);
 
     // Get fields
     int get_id() const { return id; }
     int get_creation_date() const { return creation_date; }
     string get_title() const { return title; }
-    string get_description() const { return description; }
-    string get_repository() const { return repository; }
+
 
     // Edit fields
     void set_title(string t) { title = t; }
-    void set_description(string d) { description = d; }
     virtual void set_repository(string r) = 0;
     virtual void deactivate() = 0;
 
     // Auxiliary functions
-    virtual void print_info() const = 0;
+    virtual void print_info(const int level = 0) const = 0;
 };

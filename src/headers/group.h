@@ -15,17 +15,17 @@ class Group : public Entry {
    public:
 
     // Constructors
+    Group(int id, int cd, string t);
+    Group(int id, int cd, string t, vector<Entry*> es);
 
-    Group(int id, int cd, string t, string d, string r);
-    Group(int id, int cd, string t, string d, string r, vector<Entry*> es);
+    // Destructor
+    ~Group();
 
     // Edit fields
-    void add_subentry(Entry* e);
     void set_repository(string r);
+    void add_subentry(Entry* e);
     void deactivate();
 
     // Auxiliary methods
-
-    void print_info() const;
-
+    void print_info(const int level = 0) const;
 };
