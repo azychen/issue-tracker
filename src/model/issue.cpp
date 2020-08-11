@@ -1,4 +1,3 @@
-
 #include "../headers/issue.h"
 
 // Constructors
@@ -19,7 +18,7 @@ void Issue::deactivate() {
 
 // Auxiliaray methods
 
-void Issue::printInfo() {
+void Issue::print_info() const {
     cout << "ENTRY: " << title << '\n'
          << "DATE CREATED: " << creation_date << '\n'
          << "REPOSITORY: " << repository << '\n'

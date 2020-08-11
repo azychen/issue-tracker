@@ -30,6 +30,13 @@ class Entry {
     // Constructors
     Entry(int id, int cd, string t, string d, string r);
 
+    // Get fields
+    int get_id() const { return id; }
+    int get_creation_date() const { return creation_date; }
+    string get_title() const { return title; }
+    string get_description() const { return description; }
+    string get_repository() const { return repository; }
+
     // Edit fields
     void set_title(string t) { title = t; }
     void set_description(string d) { description = d; }

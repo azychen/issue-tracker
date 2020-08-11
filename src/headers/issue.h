@@ -17,5 +17,5 @@ class Issue : public Entry {
     void deactivate();
 
     // Auxiliary methods
-    void printInfo();
+    void print_info() const;
 };
