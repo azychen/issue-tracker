@@ -12,9 +12,11 @@ using namespace std;
 class Entry {
 
    protected:
+    static int prev_id;
 
     // Fields
     int id;
+    int parent_id;
     int creation_date;
 
     string title;
@@ -27,10 +29,12 @@ class Entry {
    public:
 
     // Constructors
-    Entry(int id, int cd, string t);
+    Entry(int pid, int cd, string t);
+    Entry(int id, int pid, int cd, string t);
 
     // Get fields
     int get_id() const { return id; }
+    int get_parent_id() const { return parent_id; }
     int get_creation_date() const { return creation_date; }
     string get_title() const { return title; }
 

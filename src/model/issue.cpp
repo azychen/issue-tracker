@@ -1,8 +1,14 @@
 #include "../headers/issue.h"
 
 // Constructors
-Issue::Issue(int id, int cd, string t, string d, string r)
-    : Entry(id, cd, t),
+
+Issue::Issue(int pid, int cd, string t, string d, string r)
+    : Entry(pid, cd, t),
+      description(d),
+      repository(r) {}
+
+Issue::Issue(int id, int pid, int cd, string t, string d, string r)
+    : Entry(id, pid, cd, t),
       description(d),
       repository(r) {}
 
@@ -20,6 +26,7 @@ void Issue::deactivate() {
 
 void Issue::print_info(const int level) const {
     cout << string(level, '\t') << "ISSUE: " << title << '\n'
+         << string(level, '\t') << "ID: " << id << '\n'
          << string(level, '\t') << "DATE CREATED: " << creation_date << '\n'
          << string(level, '\t') << "REPOSITORY: " << repository << '\n'
          << string(level, '\t') << "DESCRIPTION: " << description << endl;

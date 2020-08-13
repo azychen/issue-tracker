@@ -6,6 +6,7 @@
 #include <algorithm>
 
 #include "entry.h"
+#include "issue.h"
 
 using namespace std;
 
@@ -15,14 +16,17 @@ class Group : public Entry {
    public:
 
     // Constructors
-    Group(int id, int cd, string t);
-    Group(int id, int cd, string t, vector<Entry*> es);
+    Group(int pid, int cd, string t);
+    Group(int id, int pid, int cd, string t);
+    Group(int id, int pid, int cd, string t, vector<Entry*> es);
 
     // Destructor
     ~Group();
 
     // Edit fields
     void set_repository(string r);
+    void add_new_issue(int cd, string t, string d, string r);
+    void add_new_group(int cd, string t);
     void add_subentry(Entry* e);
     void deactivate();
 

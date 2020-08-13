@@ -11,7 +11,8 @@ class Issue : public Entry {
 
    public:
     // Constructors
-    Issue(int id, int cd, string t, string d, string r);
+    Issue(int pid, int cd, string t, string d, string r);
+    Issue(int id, int pid, int cd, string t, string d, string r);
 
     // Get fields
     string get_description() const { return description; }
