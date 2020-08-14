@@ -24,6 +24,7 @@
                 // Add paths to link 
                 "${fileDirname}\\**.cpp",
                 "${fileDirname}\\model\\**.cpp",
+                // "${workspaceFolder}\\deps\\**.c",
                 "-o",
                 // "-I ${workspaceFolder}\\src\\headers",
                 "${workspaceFolder}\\bin\\${fileBasenameNoExtension}.exe"

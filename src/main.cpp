@@ -1,8 +1,15 @@
+/*
+    Anton Chen 2020
+    github.com/azychen/issue-tracker
+*/
+
 #include <iostream>
 #include <string>
 
 #include "headers/issue.h"
 #include "headers/group.h"
+
+// #include "deps/sqlite3.c"
 
 using namespace std;
 

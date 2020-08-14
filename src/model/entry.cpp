@@ -1,3 +1,8 @@
+/*
+    Anton Chen 2020
+    github.com/azychen/issue-tracker
+*/
+
 #include "../headers/entry.h"
 
 #include <iostream>
