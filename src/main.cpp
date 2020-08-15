@@ -9,7 +9,7 @@
 #include "headers/issue.h"
 #include "headers/group.h"
 
-// #include "deps/sqlite3.c"
+#include "headers/sqlite3.h"
 
 using namespace std;
 
