@@ -13,19 +13,70 @@
 
 using namespace std;
 
-int main() {
-    cout << "Creating new entry:\n" << endl;
-    Group* e = new Group(-1, 20, "Rubik's Cube Issues");
-    
-    // Issue* a1 = new Issue(e->get_parent_id(), 20, "Fix model", "Not working!", "azychen/rubiks-cube-solver");
-    // Group* a2 = new Group(e->get_parent_id(), 20, "Cube Model Issues");
-    // Issue* a3 = new Issue(e->get_parent_id(), 20, "Fix data generator", "Not fast enough!", "azychen/rubiks-cube-solver");
-    
-    
-    e->add_new_issue(20, "Fix Model", "Not Working", "azychen/rubiks-cube-solver");
-    e->add_new_group(20, "Cube Model Issues");
-    e->add_new_issue(20, "Fix Data Generator", "Not fast enough!", "azychen/rubiks-cube-solver");
+static int create_db(const char* dir);
+static int create_table(const char* dir);
 
-    e->print_info();
+int main() {
+    // cout << "Creating new entry:\n" << endl;
+    // Group* e = new Group(-1, 20, "Rubik's Cube Issues");
+    
+    // e->add_new_issue(20, "Fix Model", "Not Working", "azychen/rubiks-cube-solver");
+    // e->add_new_group(20, "Cube Model Issues");
+    // e->add_new_issue(20, "Fix Data Generator", "Not fast enough!", "azychen/rubiks-cube-solver");
+
+    // e->print_info();
+
+    const char* dir = ".\\data\\entries.db";
+    sqlite3* db;
+
+    create_db(dir);
+    create_table(dir);
+
+    cout << "Done!\n";
+
+    return 0;
+}
+
+static int create_db(const char* dir) {
+    sqlite3* db;
+    int exit = 0;
+
+    exit = sqlite3_open(dir, &db);
+    sqlite3_close(db);
+
+    return 0;
+}
+
+static int create_table(const char* dir) {
+    sqlite3* db;
+
+    string sql = "CREATE TABLE IF NOT EXISTS Entries ("
+        "ID INTEGER PRIMARY KEY, "
+        "ParentID INTEGER, "
+        "CreationDate TEXT NOT NULL,"
+        "Title TEXT NOT NULL, "
+        "Description TEXT, "
+        "Repository TEXT );";
+
+    try {
+        int exit = 0;
+        exit = sqlite3_open(dir, &db);
+
+        char* messageError;
+        exit = sqlite3_exec(db, sql.c_str(), nullptr, 0, &messageError);
+
+        if (exit != SQLITE_OK) {
+            cerr << "Error Creating Table.\n";
+            sqlite3_free(messageError);
+        } else {
+            cout << "Table Created Successfully.\n";
+        };
+
+        sqlite3_close(db);
+
+    } catch (const exception& e) {
+        cerr << e.what();
+    }
+
     return 0;
 }

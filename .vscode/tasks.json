@@ -9,10 +9,8 @@
                 "-g",
                 "src\\main.cpp"
             ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
+            "group": "build",
+            "problemMatcher": []
         },
         {
             "type": "shell",
@@ -20,13 +18,12 @@
             "command": "C:\\MinGW\\bin\\g++.exe",
             "args": [
                 "-g",
-                // "${file}",
-                // Add paths to link 
                 "${fileDirname}\\**.cpp",
                 "${fileDirname}\\model\\**.cpp",
                 // "${workspaceFolder}\\deps\\**.c",
+                "-Ldeps",
+                "-lsqlite3",
                 "-o",
-                // "-I ${workspaceFolder}\\src\\headers",
                 "${workspaceFolder}\\bin\\${fileBasenameNoExtension}.exe"
             ],
             "options": {
