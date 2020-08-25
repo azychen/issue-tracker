@@ -21,17 +21,17 @@ class Group : public Entry {
    public:
 
     // Constructors
-    Group(int pid, int cd, string t);
-    Group(int id, int pid, int cd, string t);
-    Group(int id, int pid, int cd, string t, vector<Entry*> es);
+    Group(int pid, string t);
+    Group(int id, int pid, time_t cd, string t);
+    Group(int id, int pid, time_t cd, string t, vector<Entry*> es);
 
     // Destructor
     ~Group();
 
     // Edit fields
     void set_repository(string r);
-    void add_new_issue(int cd, string t, string d, string r);
-    void add_new_group(int cd, string t);
+    void add_new_issue(string t, string d, string r);
+    void add_new_group(string t);
     void add_subentry(Entry* e);
     void deactivate();
 

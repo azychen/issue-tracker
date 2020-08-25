@@ -8,6 +8,8 @@
 #include <iostream>
 #include <string>
 #include <unordered_set>
+#include <chrono>
+#include <ctime>
 
 using namespace std;
 
@@ -22,7 +24,7 @@ class Entry {
     // Fields
     int id;
     int parent_id;
-    int creation_date;
+    time_t creation_date;
 
     string title;
 
@@ -34,15 +36,15 @@ class Entry {
    public:
 
     // Constructors
-    Entry(int pid, int cd, string t);
-    Entry(int id, int pid, int cd, string t);
+    Entry(int pid, time_t cd, string t);
+    Entry(int pid, string t);
+    Entry(int id, int pid, time_t cd, string t);
 
     // Get fields
     int get_id() const { return id; }
     int get_parent_id() const { return parent_id; }
-    int get_creation_date() const { return creation_date; }
+    time_t get_creation_date() const { return creation_date; }
     string get_title() const { return title; }
-
 
     // Edit fields
     void set_title(string t) { title = t; }

@@ -20,9 +20,7 @@
                 "-g",
                 "${fileDirname}\\**.cpp",
                 "${fileDirname}\\model\\**.cpp",
-                // "${workspaceFolder}\\deps\\**.c",
                 "-Ldeps",
-                "-lsqlite3",
                 "-o",
                 "${workspaceFolder}\\bin\\${fileBasenameNoExtension}.exe"
             ],

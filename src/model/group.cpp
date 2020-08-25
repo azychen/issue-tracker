@@ -6,17 +6,15 @@
 #include "../headers/group.h"
 
 // Constructors
+Group::Group(int pid, string t)
+    : Entry(pid, t) {}
 
-Group::Group(int pid, int cd, string t)
-    : Entry(pid, cd, t) {}
-
-Group::Group(int id, int pid, int cd, string t)
+Group::Group(int id, int pid, time_t cd, string t)
     : Entry(id, pid, cd, t) {}
 
-Group::Group(int id, int pid, int cd, string t, vector<Entry*> es)
+Group::Group(int id, int pid, time_t cd, string t, vector<Entry*> es)
     : Entry(id, pid, cd, t),
       subentries(es) {}
-
 
 // Destructor
 
@@ -36,15 +34,14 @@ void Group::set_repository(string r) {
 }
 
 // Add new issue to group
-void Group::add_new_issue(int cd, string t, string d, string r) {
-    Entry* e = new Issue(id, cd, t, d, r);
+void Group::add_new_issue(string t, string d, string r) {
+    Entry* e = new Issue(id, t, d, r);
     add_subentry(e);
 }
 
-
 // Add new subgroup to group
-void Group::add_new_group(int cd, string t) {
-    Entry* g = new Group(id, cd, t);
+void Group::add_new_group(string t) {
+    Entry* g = new Group(id, t);
     add_subentry(g);
 }
 
@@ -64,9 +61,12 @@ void Group::deactivate() {
 }
 
 void Group::print_info(const int level) const {
+    char buff[20];
+    strftime(buff, 20, "%Y-%m-%d %H:%M:%S", localtime(&creation_date));
+
     cout << string(level, '\t') << "GROUP: " << title << '\n'
          << string(level, '\t') << "ID: " << id << '\n'
-         << string(level, '\t') << "DATE CREATED: " << creation_date << '\n';
+         << string(level, '\t') << "DATE CREATED: " << buff << '\n';
     cout << string(level, '\t') << "SUB-ISSUES: " << endl;
     for (auto it = subentries.begin(); it != subentries.end(); it++) {
         cout << "\n";

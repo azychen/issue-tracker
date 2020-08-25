@@ -16,7 +16,7 @@ class Issue : public Entry {
 
    public:
     // Constructors
-    Issue(int pid, int cd, string t, string d, string r);
+    Issue(int pid, string t, string d, string r);
     Issue(int id, int pid, int cd, string t, string d, string r);
 
     // Get fields
