@@ -17,7 +17,7 @@ class Issue : public Entry {
    public:
     // Constructors
     Issue(int pid, string t, string d, string r);
-    Issue(int id, int pid, char* cd, string t, string d, string r);
+    Issue(int id, int pid, string cd, string t, string d, string r);
 
     // Get fields
     string get_description() const { return description; }
@@ -30,4 +30,5 @@ class Issue : public Entry {
 
     // Auxiliary methods
     void print_info(const int level = 0) const;
+    Entry* copy();
 };

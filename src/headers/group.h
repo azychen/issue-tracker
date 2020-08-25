@@ -22,14 +22,13 @@ class Group : public Entry {
 
     // Constructors
     Group(int pid, string t);
-    Group(int id, int pid, char* cd, string t);
-    Group(int id, int pid, char* cd, string t, vector<Entry*> es);
+    Group(int id, int pid, string cd, string t);
+    Group(int id, int pid, string cd, string t, vector<Entry*> es);
+    
+    Group(const Group& g);
 
     // Destructor
     ~Group();
-
-    // Auxiliary methods
-    void print_info(const int level = 0) const;
 
     // Edit fields
     void set_repository(string r);
@@ -37,4 +36,8 @@ class Group : public Entry {
     void add_new_group(string t);
     void add_subentry(Entry* e);
     void deactivate();
+    
+    // Auxiliary methods
+    void print_info(const int level = 0) const;
+    Entry* copy();
 };

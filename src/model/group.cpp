@@ -6,30 +6,35 @@
 #include "../headers/group.h"
 
 // Constructors
+
 Group::Group(int pid, string t)
     : Entry(pid, t) {}
 
-Group::Group(int id, int pid, char* cd, string t)
+Group::Group(int id, int pid, string cd, string t)
     : Entry(id, pid, cd, t) {}
 
-Group::Group(int id, int pid, char* cd, string t, vector<Entry*> es)
+Group::Group(int id, int pid, string cd, string t, vector<Entry*> es)
     : Entry(id, pid, cd, t),
       subentries(es) {}
 
-// Destructor
+Group::Group(const Group& g) : Entry(g) {
+    for (const Entry* const sub : g.subentries) {
 
+    }
+}
+
+// Destructor
 Group::~Group() {
-    cout << "Deleting group " << title;
-    for (auto sub : subentries) {
-        delete sub;
+    for (Entry* e : subentries) {
+        delete e;
     }
 }
 
 // Edit fields
 
 void Group::set_repository(string r) {
-    for (auto it = subentries.begin(); it != subentries.end(); it++) {
-        (*it)->set_repository(r);
+    for (Entry* e : subentries) {
+        e->set_repository(r);
     }
 }
 
@@ -54,8 +59,8 @@ void Group::add_subentry(Entry* e) {
 }
 
 void Group::deactivate() {
-    for (auto it = subentries.begin(); it != subentries.end(); it++) {
-        (*it)->deactivate();
+    for (Entry* e : subentries) {
+        e->deactivate();
     }
     is_active = false;
 }
@@ -65,8 +70,16 @@ void Group::print_info(const int level) const {
          << string(level, '\t') << "ID: " << id << '\n'
          << string(level, '\t') << "DATE CREATED: " << creation_date << '\n';
     cout << string(level, '\t') << "SUB-ISSUES: " << endl;
-    for (auto it = subentries.begin(); it != subentries.end(); it++) {
+    for (const Entry* const e : subentries) {
         cout << "\n";
-        (*it)->print_info(level + 1);
+        e->print_info(level + 1);
     }
+}
+
+Entry* Group::copy() {
+    Group* res = new Group(id, parent_id, creation_date, title);
+    for (Entry* e : subentries) {
+        res->subentries.push_back(e->copy());
+    }
+    return res;
 }

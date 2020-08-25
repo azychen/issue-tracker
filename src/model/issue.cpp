@@ -12,7 +12,7 @@ Issue::Issue(int pid, string t, string d, string r)
       description(d),
       repository(r) {}
 
-Issue::Issue(int id, int pid, char* cd, string t, string d, string r)
+Issue::Issue(int id, int pid, string cd, string t, string d, string r)
     : Entry(id, pid, cd, t),
       description(d),
       repository(r) {}
@@ -35,4 +35,9 @@ void Issue::print_info(const int level) const {
          << string(level, '\t') << "DATE CREATED: " << creation_date << '\n'
          << string(level, '\t') << "REPOSITORY: " << repository << '\n'
          << string(level, '\t') << "DESCRIPTION: " << description << endl;
+}
+
+Entry* Issue::copy() {
+    Issue* res = new Issue(*this);
+    return res; 
 }
