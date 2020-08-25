@@ -19,19 +19,24 @@ Entry::Entry(int pid, string t)
     : id(++prev_id),
       parent_id(pid),
       title(t),
-      creation_date(chrono::system_clock::to_time_t(chrono::system_clock::now())),
-      is_active(true) {}
+      is_active(true) {
+    creation_date = new char[20];
+    time_t now = chrono::system_clock::to_time_t(chrono::system_clock::now());
+    strftime(creation_date, 20, "%Y-%m-%d %H:%M:%S", localtime(&now));
+}
 
-Entry::Entry(int pid, time_t cd, string t)
+Entry::Entry(int pid, char* cd, string t)
     : id(++prev_id),
       parent_id(pid),
       creation_date(cd),
       title(t),
       is_active(true) {}
 
-Entry::Entry(int id, int pid, time_t cd, string t)
+Entry::Entry(int id, int pid, char* cd, string t)
     : id(id),
       parent_id(pid),
       title(t),
       creation_date(cd),
-      is_active(true) {}
+      is_active(true) {
+    prev_id = (id > prev_id) ? id : prev_id;
+}

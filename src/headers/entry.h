@@ -24,7 +24,7 @@ class Entry {
     // Fields
     int id;
     int parent_id;
-    time_t creation_date;
+    char* creation_date;
 
     string title;
 
@@ -36,14 +36,14 @@ class Entry {
    public:
 
     // Constructors
-    Entry(int pid, time_t cd, string t);
     Entry(int pid, string t);
-    Entry(int id, int pid, time_t cd, string t);
+    Entry(int pid, char* cd, string t);
+    Entry(int id, int pid, char* cd, string t);
 
     // Get fields
     int get_id() const { return id; }
     int get_parent_id() const { return parent_id; }
-    time_t get_creation_date() const { return creation_date; }
+    char* get_creation_date() const { return creation_date; }
     string get_title() const { return title; }
 
     // Edit fields

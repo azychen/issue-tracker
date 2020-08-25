@@ -9,10 +9,10 @@
 Group::Group(int pid, string t)
     : Entry(pid, t) {}
 
-Group::Group(int id, int pid, time_t cd, string t)
+Group::Group(int id, int pid, char* cd, string t)
     : Entry(id, pid, cd, t) {}
 
-Group::Group(int id, int pid, time_t cd, string t, vector<Entry*> es)
+Group::Group(int id, int pid, char* cd, string t, vector<Entry*> es)
     : Entry(id, pid, cd, t),
       subentries(es) {}
 
@@ -61,12 +61,9 @@ void Group::deactivate() {
 }
 
 void Group::print_info(const int level) const {
-    char buff[20];
-    strftime(buff, 20, "%Y-%m-%d %H:%M:%S", localtime(&creation_date));
-
     cout << string(level, '\t') << "GROUP: " << title << '\n'
          << string(level, '\t') << "ID: " << id << '\n'
-         << string(level, '\t') << "DATE CREATED: " << buff << '\n';
+         << string(level, '\t') << "DATE CREATED: " << creation_date << '\n';
     cout << string(level, '\t') << "SUB-ISSUES: " << endl;
     for (auto it = subentries.begin(); it != subentries.end(); it++) {
         cout << "\n";
