@@ -47,5 +47,5 @@ class Entry {
 
     // Auxiliary methods
     virtual void print_info(const int level = 0) const = 0;
-    virtual Entry* copy();
+    virtual Entry* get_copy() const = 0;
 };

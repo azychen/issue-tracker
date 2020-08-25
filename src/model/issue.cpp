@@ -37,7 +37,7 @@ void Issue::print_info(const int level) const {
          << string(level, '\t') << "DESCRIPTION: " << description << endl;
 }
 
-Entry* Issue::copy() {
+Entry* Issue::get_copy() const {
     Issue* res = new Issue(*this);
     return res; 
 }

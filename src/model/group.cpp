@@ -18,8 +18,8 @@ Group::Group(int id, int pid, string cd, string t, vector<Entry*> es)
       subentries(es) {}
 
 Group::Group(const Group& g) : Entry(g) {
-    for (const Entry* const sub : g.subentries) {
-
+    for (Entry* e : g.subentries) {
+        subentries.push_back(e->get_copy());
     }
 }
 
@@ -28,6 +28,21 @@ Group::~Group() {
     for (Entry* e : subentries) {
         delete e;
     }
+}
+
+// Copy assignment
+Group& Group::operator=(const Group& g) {
+    if (this != &g) {
+        clear();
+        parent_id = g.parent_id;
+        id = g.id;
+        creation_date = g.creation_date;
+        title = g.title;
+        for (Entry* e : g.subentries) {
+            subentries.push_back(e->get_copy());
+        }
+    }
+    return *this;
 }
 
 // Edit fields
@@ -65,6 +80,8 @@ void Group::deactivate() {
     is_active = false;
 }
 
+// Auxiliary methods
+
 void Group::print_info(const int level) const {
     cout << string(level, '\t') << "GROUP: " << title << '\n'
          << string(level, '\t') << "ID: " << id << '\n'
@@ -76,10 +93,16 @@ void Group::print_info(const int level) const {
     }
 }
 
-Entry* Group::copy() {
+Entry* Group::get_copy() const {
     Group* res = new Group(id, parent_id, creation_date, title);
     for (Entry* e : subentries) {
-        res->subentries.push_back(e->copy());
+        res->subentries.push_back(e->get_copy());
     }
     return res;
+}
+
+void Group::clear() {
+    for (Entry* e : subentries) {
+        delete e;
+    }
 }

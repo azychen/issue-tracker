@@ -30,5 +30,5 @@ class Issue : public Entry {
 
     // Auxiliary methods
     void print_info(const int level = 0) const;
-    Entry* copy();
+    Entry* get_copy() const override;
 };
