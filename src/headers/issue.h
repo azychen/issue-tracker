@@ -20,8 +20,8 @@ class Issue : public Entry {
     Issue(int id, int pid, string cd, string t, string d, string r);
 
     // Get fields
-    string get_description() const { return description; }
-    string get_repository() const { return repository; }
+    const string& get_description() const { return description; }
+    const string& get_repository() const { return repository; }
 
     // Edit fields
     void set_description(string d) { description = d; }

@@ -86,10 +86,15 @@ void Group::print_info(const int level) const {
     cout << string(level, '\t') << "GROUP: " << title << '\n'
          << string(level, '\t') << "ID: " << id << '\n'
          << string(level, '\t') << "DATE CREATED: " << creation_date << '\n';
-    cout << string(level, '\t') << "SUB-ISSUES: " << endl;
-    for (const Entry* const e : subentries) {
-        cout << "\n";
-        e->print_info(level + 1);
+    cout << string(level, '\t') << "SUB-ISSUES: ";
+    if (subentries.empty()) {
+        cout << "None" << endl;
+    } else {
+        cout << '\n';
+        for (const Entry* const e : subentries) {
+            cout << "\n";
+            e->print_info(level + 1);
+        }
     }
 }
 

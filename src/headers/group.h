@@ -32,6 +32,9 @@ class Group : public Entry {
     // Copy assignment
     Group& operator=(const Group& g);
 
+    // Get fields
+    const vector<Entry*>& get_subentries() { return subentries; }
+
     // Edit fields
     void set_repository(string r);
     void add_new_issue(string t, string d, string r);
