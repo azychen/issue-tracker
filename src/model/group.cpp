@@ -53,24 +53,50 @@ void Group::set_repository(string r) {
     }
 }
 
-// Add new issue to group
-void Group::add_new_issue(string t, string d, string r) {
-    Entry* e = new Issue(id, t, d, r);
-    add_subentry(e);
-}
-
-// Add new subgroup to group
-void Group::add_new_group(string t) {
-    Entry* g = new Group(id, t);
-    add_subentry(g);
-}
-
-// Add existing entry to group
-void Group::add_subentry(Entry* e) {
-    // Check if entry exists
-    if (find(subentries.begin(), subentries.end(), e) == subentries.end()) {
-        subentries.push_back(e);
+bool Group::add_entry(Entry* e) {
+    for (Entry* sub : subentries) {
+        if (e->get_id() == e->get_id()) {
+            return false;
+        }
     }
+    subentries.push_back(e);
+    return true;
+}
+
+void Group::add_new_issue(string t, string d, string r) {
+    Issue* i = new Issue(id, t, d, r);
+    subentries.push_back(i);
+}
+
+void Group::add_new_group(string t) {
+    Group* g = new Group(id, t);
+    subentries.push_back(g);
+}
+
+
+bool Group::delete_entry(int id) {
+    if (this->id == id) {
+        clear();
+        return true;
+    }
+
+    // check subentries
+    bool deleted = false;
+    for (auto it = subentries.begin(); it != subentries.end(); it++) {
+        deleted = (*it)->delete_entry(id);
+        if (deleted) {
+            subentries.erase(it);
+            return true;
+        }
+    }
+    return false;
+}
+
+void Group::activate() {
+    for (Entry* e : subentries) {
+        e->activate();
+    }
+    is_active = true;
 }
 
 void Group::deactivate() {
@@ -96,6 +122,25 @@ void Group::print_info(const int level) const {
             e->print_info(level + 1);
         }
     }
+}
+
+bool Group::save_to_file(string file_path, bool overwrite) {
+    ofstream save_file;
+
+    save_file.open(file_path, ((overwrite) ? ios_base::trunc : ios_base::app));
+    if (save_file.fail()) return false;
+
+    save_file << id << ','
+              << parent_id << ','
+              << creation_date << ','
+              << title << ','
+              << is_active << '\n';
+
+    save_file.close();
+
+    for (Entry* e : subentries) e->save_to_file(file_path, false);
+
+    return true;
 }
 
 Entry* Group::get_copy() const {

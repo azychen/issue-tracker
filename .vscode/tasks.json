@@ -20,7 +20,6 @@
                 "-g",
                 "${fileDirname}\\**.cpp",
                 "${fileDirname}\\model\\**.cpp",
-                "-Ldeps",
                 "-o",
                 "${workspaceFolder}\\bin\\${fileBasenameNoExtension}.exe"
             ],

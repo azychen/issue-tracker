@@ -23,7 +23,7 @@ class Entry {
 
     // Fields
     int id;
-    int parent_id;
+    int parent_id = -1;
     string creation_date;
     string title;
     bool is_active;
@@ -42,10 +42,16 @@ class Entry {
 
     // Edit fields
     void set_title(string t) { title = t; }
+    virtual bool delete_entry(int id);
     virtual void set_repository(string r) = 0;
     virtual void deactivate() = 0;
+    virtual void activate() = 0;
 
     // Auxiliary methods
     virtual void print_info(const int level = 0) const = 0;
+
+    virtual bool save_to_file(string file_path, bool overwrite = true) = 0;
+
     virtual Entry* get_copy() const = 0;
+    virtual void clear() {}
 };

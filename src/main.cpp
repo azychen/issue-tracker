@@ -6,8 +6,8 @@
 #include <iostream>
 #include <string>
 
-#include "headers/issue.h"
 #include "headers/group.h"
+#include "headers/issue.h"
 
 using namespace std;
 
@@ -15,18 +15,14 @@ static int create_db(const char* dir);
 static int create_table(const char* dir);
 
 int main() {
-    cout << "Creating new entry:\n" << endl;
-    Group e(-1, "Rubik's Cube Issues");
+    Group g(-1, "test_issues");
 
-    e.add_new_issue("Fix Model", "Not Working", "azychen/rubiks-cube-solver");
-    e.add_new_group("Cube Model Issues");
-    e.add_new_issue("Fix Data Generator", "Not fast enough!", "azychen/rubiks-cube-solver");
+    g.add_new_issue("Change constructor",
+                    "Fix order of arguments in constructor",
+                    "https://github.com/azychen/issue-tracker");
 
-    e.set_repository("Changed repository");
-
-    e.print_info();
-
+    string str = "data/" + g.get_title() + ".csv";
+    g.save_to_file(str);
 
     return 0;
 }
-

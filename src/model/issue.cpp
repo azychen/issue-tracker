@@ -17,16 +17,6 @@ Issue::Issue(int id, int pid, string cd, string t, string d, string r)
       description(d),
       repository(r) {}
 
-// Edit fields
-
-void Issue::set_repository(string r) {
-    repository = r;
-}
-
-void Issue::deactivate() {
-    is_active = false;
-}
-
 // Auxiliary methods
 
 void Issue::print_info(const int level) const {
@@ -37,7 +27,25 @@ void Issue::print_info(const int level) const {
          << string(level, '\t') << "DESCRIPTION: " << description << endl;
 }
 
+bool Issue::save_to_file(string file_path, bool overwrite) {
+    ofstream save_file;
+
+    save_file.open(file_path, ((overwrite) ? ios_base::trunc : ios_base::app));
+    if (save_file.fail()) return false;
+
+    save_file << id << ','
+              << parent_id << ','
+              << creation_date << ','
+              << title << ','
+              << is_active << ','
+              << description << ','
+              << repository << '\n';
+    
+    save_file.close();
+    return true;
+}
+
 Entry* Issue::get_copy() const {
     Issue* res = new Issue(*this);
-    return res; 
+    return res;
 }

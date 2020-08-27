@@ -37,14 +37,20 @@ class Group : public Entry {
 
     // Edit fields
     void set_repository(string r);
+    bool add_entry(Entry* e);
     void add_new_issue(string t, string d, string r);
     void add_new_group(string t);
-    void add_subentry(Entry* e);
+    bool delete_entry(int id) override;
+
+    void activate();
     void deactivate();
 
     // Auxiliary methods
     void print_info(const int level = 0) const;
+
+    bool save_to_file(string file_path, bool overwrite = true) override;
+
     Entry* get_copy() const override;
     void copy(const Group& g);
-    void clear();
+    void clear() override;
 };

@@ -5,11 +5,6 @@
 
 #include "../headers/entry.h"
 
-#include <iostream>
-#include <string>
-
-using namespace std;
-
 // Fields
 int Entry::prev_id = 0;
 
@@ -43,3 +38,10 @@ Entry::Entry(int id, int pid, string cd, string t)
     prev_id = (id > prev_id) ? id : prev_id;
 }
 
+bool Entry::delete_entry(int id) {
+	if (this->id == id) {
+		clear();
+		return true;
+	}
+	return false;
+}

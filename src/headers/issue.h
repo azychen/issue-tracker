@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <string>
+#include <fstream>
 
 #include "entry.h"
 
@@ -25,10 +26,14 @@ class Issue : public Entry {
 
     // Edit fields
     void set_description(string d) { description = d; }
-    void set_repository(string r);
-    void deactivate();
+    void set_repository(string r) { repository = r; }
+    void activate() { is_active = true; };
+    void deactivate() { is_active = false; };
 
     // Auxiliary methods
     void print_info(const int level = 0) const;
+
+    bool save_to_file(string file_path, bool overwrite = true) override;
+    
     Entry* get_copy() const override;
 };
