@@ -7,13 +7,13 @@
 
 // Constructors
 
-Group::Group(int pid, string t)
-    : Entry(pid, t) {}
+Group::Group(std::string t, int pid)
+    : Entry(t, pid) {}
 
-Group::Group(int id, int pid, string cd, string t)
+Group::Group(int id, int pid, std::string cd, std::string t)
     : Entry(id, pid, cd, t) {}
 
-Group::Group(int id, int pid, string cd, string t, vector<Entry*> es)
+Group::Group(int id, int pid, std::string cd, std::string t, std::vector<Entry*> es)
     : Entry(id, pid, cd, t),
       subentries(es) {}
 
@@ -47,7 +47,7 @@ Group& Group::operator=(const Group& g) {
 
 // Edit fields
 
-void Group::set_repository(string r) {
+void Group::set_repository(std::string r) {
     for (Entry* e : subentries) {
         e->set_repository(r);
     }
@@ -63,13 +63,13 @@ bool Group::add_entry(Entry* e) {
     return true;
 }
 
-void Group::add_new_issue(string t, string d, string r) {
-    Issue* i = new Issue(id, t, d, r);
+void Group::add_new_issue(std::string t, std::string d, std::string r) {
+    Issue* i = new Issue(t, d, r, id);
     subentries.push_back(i);
 }
 
-void Group::add_new_group(string t) {
-    Group* g = new Group(id, t);
+void Group::add_new_group(std::string t) {
+    Group* g = new Group(t, id);
     subentries.push_back(g);
 }
 
@@ -109,31 +109,36 @@ void Group::deactivate() {
 // Auxiliary methods
 
 void Group::print_info(const int level) const {
-    cout << string(level, '\t') << "GROUP: " << title << '\n'
-         << string(level, '\t') << "ID: " << id << '\n'
-         << string(level, '\t') << "DATE CREATED: " << creation_date << '\n';
-    cout << string(level, '\t') << "SUB-ISSUES: ";
+    std::cout << std::string(level, '\t') << "GROUP: " << title << '\n'
+         << std::string(level, '\t') << "ID: " << id << '\n'
+         << std::string(level, '\t') << "DATE CREATED: " << creation_date << '\n';
+    std::cout << std::string(level, '\t') << "SUB-ISSUES: ";
     if (subentries.empty()) {
-        cout << "None" << endl;
+        std::cout << "None" << std::endl;
     } else {
-        cout << '\n';
+        std::cout << '\n';
         for (const Entry* const e : subentries) {
-            cout << "\n";
+            std::cout << "\n";
             e->print_info(level + 1);
         }
     }
 }
 
-bool Group::save_to_file(string file_path, bool overwrite) {
-    ofstream save_file;
+bool Group::save_to_file(std::string file_path, bool overwrite) {
+    std::ofstream save_file;
 
-    save_file.open(file_path, ((overwrite) ? ios_base::trunc : ios_base::app));
+    if (overwrite) {
+        save_file.open(file_path, std::ios_base::trunc);
+    } else {
+        save_file.open(file_path, std::ios_base::app);
+    }
+
     if (save_file.fail()) return false;
 
     save_file << id << ','
               << parent_id << ','
               << creation_date << ','
-              << title << ','
+              << '\"' << title << '\"' << ','
               << is_active << '\n';
 
     save_file.close();

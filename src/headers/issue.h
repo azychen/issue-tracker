@@ -12,28 +12,28 @@
 #include "entry.h"
 
 class Issue : public Entry {
-    string description;
-    string repository;
+    std::string description;
+    std::string repository;
 
    public:
     // Constructors
-    Issue(int pid, string t, string d, string r);
-    Issue(int id, int pid, string cd, string t, string d, string r);
+    Issue(std::string t, std::string d, std::string r, int pid = -1);
+    Issue(int id, int pid, std::string cd, std::string t, std::string d, std::string r);
 
     // Get fields
-    const string& get_description() const { return description; }
-    const string& get_repository() const { return repository; }
+    const std::string& get_description() const { return description; }
+    const std::string& get_repository() const { return repository; }
 
     // Edit fields
-    void set_description(string d) { description = d; }
-    void set_repository(string r) { repository = r; }
+    void set_description(std::string d) { description = d; }
+    void set_repository(std::string r) { repository = r; }
     void activate() { is_active = true; };
     void deactivate() { is_active = false; };
 
     // Auxiliary methods
     void print_info(const int level = 0) const;
 
-    bool save_to_file(string file_path, bool overwrite = true) override;
+    bool save_to_file(std::string file_path, bool overwrite = true) override;
     
     Entry* get_copy() const override;
 };

@@ -10,26 +10,26 @@ int Entry::prev_id = 0;
 
 // Constructors
 
-Entry::Entry(int pid, string t)
+Entry::Entry(std::string t, int pid)
     : id(++prev_id),
       parent_id(pid),
       title(t),
       is_active(true) {
     char* curr_time = new char[creation_date_length];
-    time_t now = chrono::system_clock::to_time_t(chrono::system_clock::now());
+    time_t now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
     strftime(curr_time, 20, "%Y-%m-%d %H:%M:%S", localtime(&now));
-    creation_date = string(curr_time);
+    creation_date = std::string(curr_time);
     delete curr_time;
 }
 
-Entry::Entry(int pid, string cd, string t)
+Entry::Entry(int pid, std::string cd, std::string t)
     : id(++prev_id),
       parent_id(pid),
       creation_date(cd),
       title(t),
       is_active(true) {}
 
-Entry::Entry(int id, int pid, string cd, string t)
+Entry::Entry(int id, int pid, std::string cd, std::string t)
     : id(id),
       parent_id(pid),
       title(t),

@@ -9,9 +9,6 @@
 #include <ctime>
 #include <iostream>
 #include <string>
-#include <unordered_set>
-
-using namespace std;
 
 // Abstract class, represents a generic entry,
 // is inherited by Group and Issue classes.
@@ -23,34 +20,34 @@ class Entry {
 
     // Fields
     int id;
-    int parent_id = -1;
-    string creation_date;
-    string title;
+    int parent_id;
+    std::string creation_date;
+    std::string title;
     bool is_active;
 
    public:
     // Constructors
-    Entry(int pid, string t);
-    Entry(int pid, string cd, string t);
-    Entry(int id, int pid, string cd, string t);
+    Entry(std::string t, int pid = -1);
+    Entry(int pid, std::string cd, std::string t);
+    Entry(int id, int pid, std::string cd, std::string t);
 
     // Get fields
     int get_id() const { return id; }
     int get_parent_id() const { return parent_id; }
-    const string& get_creation_date() const { return creation_date; }
-    const string& get_title() const { return title; }
+    const std::string& get_creation_date() const { return creation_date; }
+    const std::string& get_title() const { return title; }
 
     // Edit fields
-    void set_title(string t) { title = t; }
+    void set_title(std::string t) { title = t; }
     virtual bool delete_entry(int id);
-    virtual void set_repository(string r) = 0;
+    virtual void set_repository(std::string r) = 0;
     virtual void deactivate() = 0;
     virtual void activate() = 0;
 
     // Auxiliary methods
     virtual void print_info(const int level = 0) const = 0;
 
-    virtual bool save_to_file(string file_path, bool overwrite = true) = 0;
+    virtual bool save_to_file(std::string file_path, bool overwrite = true) = 0;
 
     virtual Entry* get_copy() const = 0;
     virtual void clear() {}
