@@ -39,9 +39,18 @@ Entry::Entry(int id, int pid, std::string cd, std::string t, bool active)
 }
 
 bool Entry::delete_entry(int id) {
-	if (this->id == id) {
-		clear();
-		return true;
+    if (this->id == id) {
+        clear();
+        return true;
+    }
+    return false;
+}
+
+std::string& Entry::sanitize(std::string& s) {
+    std::string forbidden_chars = "\",";
+	for (char& c : forbidden_chars) {
+		s.erase(std::remove(s.begin(), s.end(), c), s.end());
 	}
-	return false;
+	// s = '"' + s + '"';
+	return s;
 }

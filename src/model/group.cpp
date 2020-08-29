@@ -51,11 +51,12 @@ void Group::set_repository(std::string r) {
 
 bool Group::add_entry(Entry* e) {
     for (Entry* sub : subentries) {
-        if (e->get_id() == e->get_id()) {
+        if (e->get_id() == sub->get_id()) {
             return false;
         }
     }
     subentries.push_back(e);
+    e->set_parent_id(id);
     return true;
 }
 
@@ -133,7 +134,7 @@ bool Group::save_to_file(std::string file_path, bool overwrite) {
     save_file << id << ','
               << parent_id << ','
               << creation_date << ','
-              << '\"' << title << '\"' << ','
+              << sanitize(title) << ','
               << is_active << '\n';
 
     save_file.close();
@@ -161,21 +162,20 @@ void Group::clear() {
 // loads savefile as group
 void Group::load_from_file(std::string file_path) {
     std::vector<Entry*> entries = get_entries_from_file(file_path);
-    int root_id = entries[0]->get_id();
 
     std::unordered_map<int, int> id_to_index;  // <id, index>
-    std::string line;
+    int root_id = entries[0]->get_id();
 
     for (int i = 0; i < entries.size(); i++) {
         id_to_index[entries[i]->get_id()] = i;
     }
 
-    for (int i = 0; i < entries.size(); i++) {
-        if (entries[i]->get_parent_id() != -1) {
-            entries[entries[i]->get_parent_id()]->add_entry(entries[i]);
-            if (entries[i]->get_parent_id() == root_id) {
-                add_entry(entries[i]);
-            }
+    // all entries[1:] must have parent entry
+    for (int i = 1; i < entries.size(); i++) {
+        std::cout << entries[i]->get_parent_id() << std::endl;
+        entries[id_to_index[entries[i]->get_parent_id()]]->add_entry(entries[i]);
+        if (entries[i]->get_parent_id() == root_id) {
+            add_entry(entries[i]);
         }
     }
 
@@ -199,6 +199,7 @@ std::vector<Entry*> Group::get_entries_from_file(const std::string& file_path) {
 
 // reconstructs Entry from a single line of savefile
 Entry* Group::parse_line(const std::string& line) {
+    Entry* res;
     std::vector<std::string> fields = get_fields_from_line(line);
 
     int id = std::stoi(fields[0]);
@@ -211,12 +212,12 @@ Entry* Group::parse_line(const std::string& line) {
         std::string d = fields[5];
         std::string r = fields[6];
 
-        Issue* res = new Issue(id, pid, cd, t, d, r, active);
-        return res;
+        res = new Issue(id, pid, cd, t, d, r, active);
     } else {  // then number of fields indicates a Group
-        Group* res = new Group(id, pid, cd, t, active);
-        return res;
+        res = new Group(id, pid, cd, t, active);
     }
+
+    return res;
 }
 
 // returns list of fields from line as strings
@@ -239,5 +240,5 @@ void Group::assign_fields(Entry* e) {
     parent_id = e->get_parent_id();
     creation_date = e->get_creation_date();
     title = e->get_title();
-    this->is_active = e->get_active();
+    is_active = e->get_active();
 }

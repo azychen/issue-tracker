@@ -41,10 +41,10 @@ bool Issue::save_to_file(std::string file_path, bool overwrite) {
     save_file << id << ','
               << parent_id << ','
               << creation_date << ','
-              << '\"' << title << '\"' << ','
+              << sanitize(title) << ','
               << is_active << ','
-              << '\"' << description << '\"' << ','
-              << '\"' << repository << '\"' << '\n';
+              << sanitize(description) << ','
+              << sanitize(repository) << '\n';
 
     save_file.close();
     return true;

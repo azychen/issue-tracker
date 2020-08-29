@@ -9,6 +9,7 @@
 #include <ctime>
 #include <iostream>
 #include <string>
+#include <algorithm>
 
 // Abstract class, represents a generic entry,
 // is inherited by Group and Issue classes.
@@ -16,7 +17,7 @@
 class Entry {
    protected:
     static int prev_id;
-    const static int creation_date_length = 20 ;
+    const static int creation_date_length = 20;
 
     // Fields
     int id;
@@ -41,6 +42,7 @@ class Entry {
     bool get_active() { return is_active; }
 
     // Edit fields
+    void set_parent_id(int id) { parent_id = id; }
     void set_title(std::string t) { title = t; }
     virtual bool delete_entry(int id);
     virtual void set_repository(std::string r) = 0;
@@ -54,4 +56,7 @@ class Entry {
 
     virtual Entry* get_copy() const = 0;
     virtual void clear() {}
+
+//    protected:
+    std::string& sanitize(std::string& s);
 };
