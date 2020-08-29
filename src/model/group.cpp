@@ -183,8 +183,9 @@ void Group::load_from_file(std::string file_path) {
 // reconstructs and returns all Entries found in savefile
 std::vector<Entry*> Group::get_entries_from_file(const std::string& file_path) {
     std::vector<Entry*> res;
+    std::ifstream save_file;
+    save_file.open(file_path);
 
-    std::ifstream save_file(file_path);
     if (!save_file.fail()) {
         std::string line;
         while (std::getline(save_file, line)) {
@@ -216,19 +217,17 @@ Entry* Group::parse_line(const std::string& line) {
     }
 }
 
-// returns list of fields from line;
+// returns list of fields from line as strings
 std::vector<std::string> Group::get_fields_from_line(const std::string& line) {
     std::stringstream ss(line);
-    std::cout << "Line: " << line << std::endl;
     std::vector<std::string> res;
-    for (std::string s; ss >> s;) {
-        res.push_back(s);
-        if (ss.peek() == ',' || ss.peek() == ' ') {
-            ss.ignore();
-        }
+    std::string cell;
+
+    while (std::getline(ss, cell, ',')) {
+        res.push_back(cell);
     }
-    for (std::string& s : res) {
-        std::cout << "Field: " << s << std::endl;
+    if (!ss && cell.empty()) {
+        res.push_back("");
     }
     return res;
 }

@@ -16,7 +16,7 @@
 class Entry {
    protected:
     static int prev_id;
-    const static int creation_date_length = 20;
+    const static int creation_date_length = 20 ;
 
     // Fields
     int id;
