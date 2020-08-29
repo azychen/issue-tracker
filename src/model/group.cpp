@@ -176,8 +176,10 @@ void Group::load_from_file(std::string file_path) {
             if (entries[i]->get_parent_id() == root_id) {
                 add_entry(entries[i]);
             }
-        } 
+        }
     }
+
+    assign_fields(entries[0]);
 }
 
 // reconstructs and returns all Entries found in savefile
@@ -209,7 +211,7 @@ Entry* Group::parse_line(const std::string& line) {
         std::string d = fields[5];
         std::string r = fields[6];
 
-        Issue* res = new Issue(id, pid, cd, t, d, r);
+        Issue* res = new Issue(id, pid, cd, t, d, r, active);
         return res;
     } else {  // then number of fields indicates a Group
         Group* res = new Group(id, pid, cd, t, active);
@@ -230,4 +232,12 @@ std::vector<std::string> Group::get_fields_from_line(const std::string& line) {
         res.push_back("");
     }
     return res;
+}
+
+void Group::assign_fields(Entry* e) {
+    id = e->get_id();
+    parent_id = e->get_parent_id();
+    creation_date = e->get_creation_date();
+    title = e->get_title();
+    this->is_active = e->get_active();
 }

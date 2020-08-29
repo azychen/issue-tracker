@@ -38,6 +38,7 @@ class Entry {
     virtual bool add_entry(Entry* e) { return false; }
     const std::string& get_creation_date() const { return creation_date; }
     const std::string& get_title() const { return title; }
+    bool get_active() { return is_active; }
 
     // Edit fields
     void set_title(std::string t) { title = t; }

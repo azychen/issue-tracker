@@ -59,5 +59,6 @@ class Group : public Entry {
     std::vector<Entry*> get_entries_from_file(const std::string& file_path);
     Entry* parse_line(const std::string& line);
     std::vector<std::string> get_fields_from_line(const std::string& line);
+    void assign_fields(Entry* e);
 
 };
