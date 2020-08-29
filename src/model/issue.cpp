@@ -12,8 +12,8 @@ Issue::Issue(std::string t, std::string d, std::string r, int pid)
       description(d),
       repository(r) {}
 
-Issue::Issue(int id, int pid, std::string cd, std::string t, std::string d, std::string r)
-    : Entry(id, pid, cd, t),
+Issue::Issue(int id, int pid, std::string cd, std::string t, std::string d, std::string r, bool active)
+    : Entry(id, pid, cd, t, active),
       description(d),
       repository(r) {}
 

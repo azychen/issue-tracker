@@ -17,8 +17,9 @@ class Issue : public Entry {
 
    public:
     // Constructors
+    Issue() {}
     Issue(std::string t, std::string d, std::string r, int pid = -1);
-    Issue(int id, int pid, std::string cd, std::string t, std::string d, std::string r);
+    Issue(int id, int pid, std::string cd, std::string t, std::string d, std::string r, bool active = true);
 
     // Get fields
     const std::string& get_description() const { return description; }

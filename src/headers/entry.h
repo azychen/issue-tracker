@@ -27,13 +27,15 @@ class Entry {
 
    public:
     // Constructors
+    Entry() {}
     Entry(std::string t, int pid = -1);
     Entry(int pid, std::string cd, std::string t);
-    Entry(int id, int pid, std::string cd, std::string t);
+    Entry(int id, int pid, std::string cd, std::string t, bool active = true);
 
     // Get fields
     int get_id() const { return id; }
     int get_parent_id() const { return parent_id; }
+    virtual bool add_entry(Entry* e) { return false; }
     const std::string& get_creation_date() const { return creation_date; }
     const std::string& get_title() const { return title; }
 

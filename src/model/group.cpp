@@ -10,12 +10,8 @@
 Group::Group(std::string t, int pid)
     : Entry(t, pid) {}
 
-Group::Group(int id, int pid, std::string cd, std::string t)
-    : Entry(id, pid, cd, t) {}
-
-Group::Group(int id, int pid, std::string cd, std::string t, std::vector<Entry*> es)
-    : Entry(id, pid, cd, t),
-      subentries(es) {}
+Group::Group(int id, int pid, std::string cd, std::string t, bool active)
+    : Entry(id, pid, cd, t, active) {}
 
 Group::Group(const Group& g) : Entry(g) {
     for (Entry* e : g.subentries) {
@@ -73,7 +69,6 @@ void Group::add_new_group(std::string t) {
     subentries.push_back(g);
 }
 
-
 bool Group::delete_entry(int id) {
     if (this->id == id) {
         clear();
@@ -110,8 +105,8 @@ void Group::deactivate() {
 
 void Group::print_info(const int level) const {
     std::cout << std::string(level, '\t') << "GROUP: " << title << '\n'
-         << std::string(level, '\t') << "ID: " << id << '\n'
-         << std::string(level, '\t') << "DATE CREATED: " << creation_date << '\n';
+              << std::string(level, '\t') << "ID: " << id << '\n'
+              << std::string(level, '\t') << "DATE CREATED: " << creation_date << '\n';
     std::cout << std::string(level, '\t') << "SUB-ISSUES: ";
     if (subentries.empty()) {
         std::cout << "None" << std::endl;
@@ -156,8 +151,84 @@ Entry* Group::get_copy() const {
     return res;
 }
 
+// deletes all fields
 void Group::clear() {
     for (Entry* e : subentries) {
         delete e;
     }
+}
+
+// loads savefile as group
+void Group::load_from_file(std::string file_path) {
+    std::vector<Entry*> entries = get_entries_from_file(file_path);
+    int root_id = entries[0]->get_id();
+
+    std::unordered_map<int, int> id_to_index;  // <id, index>
+    std::string line;
+
+    for (int i = 0; i < entries.size(); i++) {
+        id_to_index[entries[i]->get_id()] = i;
+    }
+
+    for (int i = 0; i < entries.size(); i++) {
+        if (entries[i]->get_parent_id() != -1) {
+            entries[entries[i]->get_parent_id()]->add_entry(entries[i]);
+            if (entries[i]->get_parent_id() == root_id) {
+                add_entry(entries[i]);
+            }
+        } 
+    }
+}
+
+// reconstructs and returns all Entries found in savefile
+std::vector<Entry*> Group::get_entries_from_file(const std::string& file_path) {
+    std::vector<Entry*> res;
+
+    std::ifstream save_file(file_path);
+    if (!save_file.fail()) {
+        std::string line;
+        while (std::getline(save_file, line)) {
+            res.push_back(parse_line(line));
+        }
+    }
+    return res;
+}
+
+// reconstructs Entry from a single line of savefile
+Entry* Group::parse_line(const std::string& line) {
+    std::vector<std::string> fields = get_fields_from_line(line);
+
+    int id = std::stoi(fields[0]);
+    int pid = std::stoi(fields[1]);
+    std::string cd = fields[2];
+    std::string t = fields[3];
+    bool active = (fields[4] == "1");
+
+    if (fields.size() == 7) {  // if number of fields indicates an Issue
+        std::string d = fields[5];
+        std::string r = fields[6];
+
+        Issue* res = new Issue(id, pid, cd, t, d, r);
+        return res;
+    } else {  // then number of fields indicates a Group
+        Group* res = new Group(id, pid, cd, t, active);
+        return res;
+    }
+}
+
+// returns list of fields from line;
+std::vector<std::string> Group::get_fields_from_line(const std::string& line) {
+    std::stringstream ss(line);
+    std::cout << "Line: " << line << std::endl;
+    std::vector<std::string> res;
+    for (std::string s; ss >> s;) {
+        res.push_back(s);
+        if (ss.peek() == ',' || ss.peek() == ' ') {
+            ss.ignore();
+        }
+    }
+    for (std::string& s : res) {
+        std::cout << "Field: " << s << std::endl;
+    }
+    return res;
 }

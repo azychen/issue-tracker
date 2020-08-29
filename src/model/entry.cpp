@@ -29,12 +29,12 @@ Entry::Entry(int pid, std::string cd, std::string t)
       title(t),
       is_active(true) {}
 
-Entry::Entry(int id, int pid, std::string cd, std::string t)
+Entry::Entry(int id, int pid, std::string cd, std::string t, bool active)
     : id(id),
       parent_id(pid),
       title(t),
       creation_date(cd),
-      is_active(true) {
+      is_active(active) {
     prev_id = (id > prev_id) ? id : prev_id;
 }
 

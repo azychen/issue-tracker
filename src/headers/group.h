@@ -9,6 +9,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <unordered_map>
+#include <sstream>
 
 #include "entry.h"
 #include "issue.h"
@@ -18,10 +20,9 @@ class Group : public Entry {
 
    public:
     // Constructors
+    Group() {}
     Group(std::string t, int pid = -1);
-    Group(int id, int pid, std::string cd, std::string t);
-    Group(int id, int pid, std::string cd, std::string t, std::vector<Entry*> es);
-
+    Group(int id, int pid, std::string cd, std::string t, bool active = true);
     Group(const Group& g);
 
     // Destructor
@@ -35,7 +36,7 @@ class Group : public Entry {
 
     // Edit fields
     void set_repository(std::string r);
-    bool add_entry(Entry* e);
+    bool add_entry(Entry* e) override;
     void add_new_issue(std::string t, std::string d, std::string r);
     void add_new_group(std::string t);
     bool delete_entry(int id) override;
@@ -47,8 +48,15 @@ class Group : public Entry {
     void print_info(const int level = 0) const;
 
     bool save_to_file(std::string file_path, bool overwrite = true) override;
+    void load_from_file(std::string file_path);
 
     Entry* get_copy() const override;
     void copy(const Group& g);
     void clear() override;
+
+   private:
+    std::vector<Entry*> get_entries_from_file(const std::string& file_path);
+    Entry* parse_line(const std::string& line);
+    std::vector<std::string> get_fields_from_line(const std::string& line);
+
 };
