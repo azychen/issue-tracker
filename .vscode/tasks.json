@@ -2,24 +2,16 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "echo",
-            "type": "shell",
-            "command": "g++",
-            "args": [
-                "-g",
-                "src\\main.cpp"
-            ],
-            "group": "build",
-            "problemMatcher": []
-        },
-        {
             "type": "shell",
             "label": "C/C++: g++.exe build active file",
-            "command": "C:\\MinGW\\bin\\g++.exe",
+            "command": "C:\\mingw64\\mingw64\\bin\\g++.exe",
             "args": [
                 "-g",
-                "${fileDirname}\\**.cpp",
-                "${fileDirname}\\model\\**.cpp",
+                "${workspaceFolder}\\src\\**.cpp",
+                "${workspaceFolder}\\src\\model\\**.cpp",
+                "-I${workspaceFolder}\\src\\include",
+                // "${workspaceFolder}\\lib\\include",
+                // "-L${workspaceFolder}\\lib\\gcc810_x64_dll",
                 "-o",
                 "${workspaceFolder}\\bin\\${fileBasenameNoExtension}.exe"
             ],

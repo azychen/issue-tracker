@@ -3,7 +3,7 @@
     github.com/azychen/issue-tracker
 */
 
-#include "../headers/issue.h"
+#include "issue.h"
 
 // Constructors
 

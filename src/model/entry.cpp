@@ -3,7 +3,7 @@
     github.com/azychen/issue-tracker
 */
 
-#include "../headers/entry.h"
+#include "entry.h"
 
 // Fields
 int Entry::prev_id = 0;

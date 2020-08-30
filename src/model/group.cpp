@@ -3,7 +3,7 @@
     github.com/azychen/issue-tracker
 */
 
-#include "../headers/group.h"
+#include "group.h"
 
 // Constructors
 
@@ -49,6 +49,7 @@ void Group::set_repository(std::string r) {
     }
 }
 
+// Adds existing entry, sets its parent id to this' id
 bool Group::add_entry(Entry* e) {
     for (Entry* sub : subentries) {
         if (e->get_id() == sub->get_id()) {
@@ -172,7 +173,6 @@ void Group::load_from_file(std::string file_path) {
 
     // all entries[1:] must have parent entry
     for (int i = 1; i < entries.size(); i++) {
-        std::cout << entries[i]->get_parent_id() << std::endl;
         entries[id_to_index[entries[i]->get_parent_id()]]->add_entry(entries[i]);
         if (entries[i]->get_parent_id() == root_id) {
             add_entry(entries[i]);
