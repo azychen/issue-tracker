@@ -3,17 +3,45 @@
     "tasks": [
         {
             "type": "shell",
-            "label": "C/C++: g++.exe build active file",
+            "label": "C/C++: g++.exe DEBUG",
             "command": "C:\\mingw64\\mingw64\\bin\\g++.exe",
             "args": [
                 "-g",
                 "${workspaceFolder}\\src\\**.cpp",
                 "${workspaceFolder}\\src\\model\\**.cpp",
                 "-I${workspaceFolder}\\src\\include",
-                // "${workspaceFolder}\\lib\\include",
+                // "-IC:\\Users\\anton\\Downloads\\lib\\include",
+                // "-IC:\\Users\\anton\\Downloads\\lib\\include\\msvc",
+                // "-LC:\\Users\\anton\\Downloads\\lib\\cmake\\debug\\lib",
+                // "-lwx_mswud_core-3.1.dll",
+                "-o",
+                "${workspaceFolder}\\bin\\debug\\${fileBasenameNoExtension}.exe"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "C/C++: g++.exe RELEASE",
+            "command": "C:\\mingw64\\mingw64\\bin\\g++.exe",
+            "args": [
+                "-g",
+                "${workspaceFolder}\\src\\**.cpp",
+                "${workspaceFolder}\\src\\model\\**.cpp",
+                "-I${workspaceFolder}\\src\\include",
+                // "-I${workspaceFolder}\\lib\\include",
+                // "-I${workspaceFolder}\\lib\\include\\msvc",
                 // "-L${workspaceFolder}\\lib\\gcc810_x64_dll",
                 "-o",
-                "${workspaceFolder}\\bin\\${fileBasenameNoExtension}.exe"
+                "${workspaceFolder}\\bin\\release\\${fileBasenameNoExtension}.exe"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
