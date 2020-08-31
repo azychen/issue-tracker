@@ -12,7 +12,7 @@
 int main() {
     // load file
     App a;
-    a.load_list_from_save();
+    a.run();
 
     return 0;
 }
