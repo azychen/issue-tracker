@@ -1,9 +1,8 @@
 #pragma once
 
-#include <filesystem>
 #include <iostream>
+#include <map>
 #include <string>
-#include <unordered_map>
 #include <vector>
 
 #include "entry.h"
@@ -27,5 +26,7 @@ class App {
    private:
     std::string get_string_input();
     int get_int_input();
-    void print_options(const std::unordered_map<int, std::string>& options);
+    void print_options(const std::map<int, std::string>& options);
+
+    std::map<int, std::string> get_saves(std::string file_path);
 };

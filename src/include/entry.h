@@ -5,11 +5,12 @@
 
 #pragma once
 
+#include <algorithm>
 #include <chrono>
 #include <ctime>
 #include <iostream>
 #include <string>
-#include <algorithm>
+#include <dirent.h>
 
 // Abstract class, represents a generic entry,
 // is inherited by Group and Issue classes.
@@ -57,6 +58,6 @@ class Entry {
     virtual Entry* get_copy() const = 0;
     virtual void clear() {}
 
-//    protected:
+    //    protected:
     std::string& sanitize(std::string& s);
 };
