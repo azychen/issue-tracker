@@ -5,9 +5,9 @@
 
 #pragma once
 
+#include <fstream>
 #include <iostream>
 #include <string>
-#include <fstream>
 
 #include "entry.h"
 
@@ -34,7 +34,9 @@ class Issue : public Entry {
     // Auxiliary methods
     void print_info(const int level = 0) const;
 
+    bool can_add_entry() override { return false; }
+
     bool save_to_file(std::string file_path, bool overwrite = true) override;
-    
+
     Entry* get_copy() const override;
 };

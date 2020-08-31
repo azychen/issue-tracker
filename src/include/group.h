@@ -48,6 +48,8 @@ class Group : public Entry {
     // Auxiliary methods
     void print_info(const int level = 0) const;
 
+    bool can_add_entry() override { return true; }
+
     bool save_to_file(std::string file_path, bool overwrite = true) override;
     void load_from_file(std::string file_path);
 

@@ -54,6 +54,7 @@ class Entry {
     virtual void print_info(const int level = 0) const = 0;
 
     virtual bool save_to_file(std::string file_path, bool overwrite = true) = 0;
+    virtual bool can_add_entry() = 0;
 
     virtual Entry* get_copy() const = 0;
     virtual void clear() {}
