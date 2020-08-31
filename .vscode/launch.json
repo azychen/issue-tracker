@@ -8,8 +8,15 @@
             "name": "g++.exe - Build and debug active file",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}\\bin\\${fileBasenameNoExtension}.exe",
-            "args": [],
+            "program": "${workspaceFolder}\\bin\\debug\\IssueTracker_d.exe",
+            "args": [
+                "${workspaceFolder}\\src\\**.cpp",
+                "${workspaceFolder}\\src\\model\\**.cpp",
+                "${workspaceFolder}\\src\\ui\\**.cpp",
+                "-I${workspaceFolder}\\src\\include",
+                "-o",
+                "${workspaceFolder}\\bin\\debug\\IssueTracker_d.exe"
+            ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
@@ -24,7 +31,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "C/C++: g++.exe build active file"
+            "preLaunchTask": "C/C++: g++.exe DEBUG"
         }
     ]
 }

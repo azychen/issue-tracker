@@ -24,9 +24,8 @@ class App {
     void add_new_group();
 
    private:
-    std::string get_string_input();
-    int get_int_input();
-    void print_options(const std::map<int, std::string>& options);
-
     std::map<int, std::string> get_saves(std::string file_path);
+    void print_options(const std::map<int, std::string>& options);
+    std::string get_string_input();
+    int get_int_input(int min, int max);
 };
