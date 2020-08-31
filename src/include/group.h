@@ -6,12 +6,12 @@
 #pragma once
 
 #include <algorithm>
-#include <iostream>
-#include <string>
-#include <vector>
-#include <unordered_map>
-#include <sstream>
 #include <fstream>
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <unordered_map>
+#include <vector>
 
 #include "entry.h"
 #include "issue.h"
@@ -60,5 +60,4 @@ class Group : public Entry {
     Entry* parse_line(const std::string& line);
     std::vector<std::string> get_fields_from_line(const std::string& line);
     void assign_fields(Entry* e);
-
 };
