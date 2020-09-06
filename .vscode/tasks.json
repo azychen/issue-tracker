@@ -3,6 +3,31 @@
     "tasks": [
         {
             "type": "shell",
+            "label": "ARCH: C/C++: g++.exe DEBUG",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-std=c++14",
+                "-g",
+                "${workspaceFolder}/src/**.cpp",
+                "${workspaceFolder}/src/model/**.cpp",
+                "${workspaceFolder}/src/ui/**.cpp",
+                "-I${workspaceFolder}/src/include",
+                "-o",
+                "${workspaceFolder}/bin/debug/IssueTracker_d"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
             "label": "C/C++: g++.exe DEBUG",
             "command": "C:\\mingw64\\mingw64\\bin\\g++.exe",
             "args": [
