@@ -33,6 +33,7 @@ class App {
     std::map<int, std::string> get_saves(std::string file_path);
 
     void print_selected_entry();
+    void print_main_menu();
     void print_menu();
     void print_options(const std::map<int, std::string>& options);
     void print_header();

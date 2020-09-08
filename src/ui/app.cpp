@@ -27,17 +27,18 @@ void App::load_list_from_save() {
 
     std::cout << "What list would you like to load? Enter num: " << std::endl;
     print_options(save_paths);
-    int input = get_int_input(save_paths.begin()->first, save_paths.rbegin()->first);
+    int input = get_int_input(save_paths.begin()->first,
+                              save_paths.rbegin()->first);
 
     std::string save_path = SAVE_PATH + save_paths[input];
+    std::cout << save_path << std::endl;
 
-    clear_terminal();
+    // clear_terminal();
 
-    if (!list) {
-        list = new Group();
-    }
+    if (!list) list = new Group();
     list->load_from_file(save_path);
     selected_entry = list;
+    list->print_info();
 }
 
 void App::add_new_issue() {
@@ -55,7 +56,7 @@ void App::add_new_issue() {
 
         Entry* new_entry = new Issue(t, d, r, selected_entry->get_id());
         std::cout << "New entry created: "
-                  << new_entry->get_title() 
+                  << new_entry->get_title()
                   << std::endl;
 
         selected_entry->add_entry(new_entry);
@@ -70,13 +71,15 @@ void App::add_new_group() {
         t = get_string_input();
 
         Entry* new_entry = new Group(t, selected_entry->get_id());
-        std::cout << "New gorup created: "
+        std::cout << "New group created: "
                   << new_entry->get_title()
                   << std::endl;
 
         selected_entry->add_entry(new_entry);
     }
 }
+
+// Private
 
 // returns a list of saves in file_path as map
 std::map<int, std::string> App::get_saves(std::string file_path) {
@@ -100,6 +103,30 @@ std::map<int, std::string> App::get_saves(std::string file_path) {
 
     closedir(dp);
     return res;
+}
+
+void App::print_main_menu() {
+    std::cout << "Issue Tracker\n"
+              << "Anton Chen 2020"
+              << std::endl;
+
+    std::map<int, std::string> options;
+    std::map<int, std::string> saves = get_saves(SAVE_PATH);
+
+    options[1] = "Create new list";
+    if (!saves.empty()) {
+        options[2] = "Load list from save";
+    }
+
+    std::cout << "What would you like to do?" << std::endl;
+    print_options(options);
+
+    int input = get_int_input(1, 2);
+    if (input == 1) {
+        create_new_list();
+    } else if (input == 2) {
+        load_list_from_save();
+    }
 }
 
 void App::print_options(const std::map<int, std::string>& options) {
