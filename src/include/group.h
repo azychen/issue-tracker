@@ -25,6 +25,8 @@ class Group : public Entry {
     Group(std::string t, int pid = -1);
     Group(int id, int pid, std::string cd, std::string t, bool active = true);
     Group(const Group& g);
+    Group(const Entry& e);
+    Group(const char* file_path);
 
     // Destructor
     ~Group();

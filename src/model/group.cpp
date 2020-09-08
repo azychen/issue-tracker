@@ -19,6 +19,28 @@ Group::Group(const Group& g) : Entry(g) {
     }
 }
 
+Group::Group(const Entry& e) 
+    : Entry(e) {}
+
+Group::Group(const char* file_path) {
+    std::vector<Entry*> entries = get_entries_from_file(file_path);
+
+    std::unordered_map<int, int> id_to_index;  // <id, index>
+    Group(*entries[0]);
+
+    for (int i = 0; i < entries.size(); i++) {
+        id_to_index[entries[i]->get_id()] = i;
+    }
+
+    // all entries[1:] must have parent entry
+    for (int i = 1; i < entries.size(); i++) {
+        entries[id_to_index[entries[i]->get_parent_id()]]->add_entry(entries[i]);
+    }
+
+
+}
+
+
 // Destructor
 Group::~Group() {
     for (Entry* e : subentries) {
@@ -175,6 +197,7 @@ void Group::load_from_file(std::string file_path) {
     for (int i = 1; i < entries.size(); i++) {
         entries[id_to_index[entries[i]->get_parent_id()]]->add_entry(entries[i]);
         if (entries[i]->get_parent_id() == root_id) {
+            // segmentation fault ?????
             add_entry(entries[i]);
         }
     }
