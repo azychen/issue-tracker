@@ -38,6 +38,15 @@ Entry::Entry(int id, int pid, std::string cd, std::string t, bool active)
     prev_id = (id > prev_id) ? id : prev_id;
 }
 
+Entry::Entry(const Entry& e)
+    : id(e.id),
+      parent_id(e.parent_id),
+      title(e.title),
+      creation_date(e.creation_date),
+      is_active(e.is_active) {
+    prev_id = (id > prev_id) ? id : prev_id;
+}
+
 bool Entry::delete_entry(int id) {
     if (this->id == id) {
         clear();
@@ -48,9 +57,9 @@ bool Entry::delete_entry(int id) {
 
 std::string& Entry::sanitize(std::string& s) {
     std::string forbidden_chars = "\",";
-	for (char& c : forbidden_chars) {
-		s.erase(std::remove(s.begin(), s.end(), c), s.end());
-	}
-	// s = '"' + s + '"';
-	return s;
+    for (char& c : forbidden_chars) {
+        s.erase(std::remove(s.begin(), s.end(), c), s.end());
+    }
+    // s = '"' + s + '"';
+    return s;
 }

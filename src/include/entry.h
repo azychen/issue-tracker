@@ -33,6 +33,7 @@ class Entry {
     Entry(std::string t, int pid = -1);
     Entry(int pid, std::string cd, std::string t);
     Entry(int id, int pid, std::string cd, std::string t, bool active = true);
+    Entry(const Entry& e);
 
     // Get fields
     int get_id() const { return id; }
